@@ -1,34 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
+import ItemListContainer from './Components/ItemListContainer'
+import NavBar from './Components/NavBar'
+import ItemDetailContainer from './Components/ItemDetailContainer'
+import Error404 from './Components/Error404'
+import CartContextProvider from './Components/CartContext'
+import Cart from './Components/Cart'
+import Checkout from './Components/Checkout'
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <CartContextProvider>
+    <BrowserRouter>
+    <NavBar/>
+    <Routes>
+    <Route exact path={"/"} element={<ItemListContainer greeting= "Just Sneakers"  />}/>
+    <Route exact path={"/category/:categoryId"} element={<ItemListContainer/>}/>
+    <Route exact path={"/item/:id"} element={<ItemDetailContainer/>}/>
+    <Route exact path={"/cart"} element={<Cart/>}/>
+    <Route exact path={"/checkout"} element={<Checkout/>}/>
+    <Route exact path={"*"} element={<Error404/>}/>
+    </Routes>
+    </BrowserRouter>
+    </CartContextProvider>
+  
+
+    
+    
   )
 }
 
